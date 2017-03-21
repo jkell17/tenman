@@ -1,0 +1,51 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'boards/style.css' %}" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.3.0/milligram.min.css">
+
+<header class="header">
+   <section class="container">
+      <h1 class="title">Leaderboards.</h1>
+      <a class="button" href="#new-game" title="New game">New game</a>
+      <a class="button" href="#rankings" title="Getting Started">Rankings</a>
+      <a class="button" href="#player" title="Getting Started">Players</a>
+   </section>
+</header>
+
+<section class="container" id="new-game">
+   <h3 class="title">New Game</h3>
+   <form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit" />
+    </form>
+</section>
+
+<section class="container" id="rankings">
+   <h3 class="title">Rankings</h3>
+   {% for key,value in rankings.items %}
+    <h4>{{key}}</h4>
+    <table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Wins</th>
+      <th>Loses</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for k,v in value.items %}
+    <tr>
+    <td>{{k}}</td>
+    {% for i in v%}
+    <td>{{i}} </td>
+    {% endfor %}  
+    </tr>
+    {% endfor %}  
+  </tbody>
+</table>
+{% endfor %}
+
+    </form>
+</section>
+
+
