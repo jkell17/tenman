@@ -1,1 +1,1 @@
-web: gunicorn tenman.wsgi
+web: gunicorn tenman.wsgi --log-file -
