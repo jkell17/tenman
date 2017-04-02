@@ -12,7 +12,7 @@ def make_rankings():
 	c = Competition.objects.all()
 	g = Game.objects.all()
 
-	for comp in c:   	
+	for comp in c:
 		rankings[comp] = {key:[0,0] for key in p}
 	for game in g:
 		rankings[game.comp][game.winner][0] += 1
@@ -23,12 +23,12 @@ def index(request):
 	if request.method == 'POST':
 		form = GameForm(request.POST)
 		if form.is_valid():
-			form.save()		
+			form.save()
 			return HttpResponseRedirect('/success')
 		else:
 			return HttpResponseRedirect('/failure')
 
-	else:   	
+	else:
 		players = Player.objects.all()
 		games = Game.objects.all()
 		form = GameForm()
@@ -37,7 +37,7 @@ def index(request):
 		return render(request, 'boards/index.html', context)
 
 def success(request):
-	return HttpResponse("Success")
+	return render(request, 'boards/success.html')
 
 def failure(request):
-	return HttpResponse("Failure")
+	return render(request, 'boards/failure.html')

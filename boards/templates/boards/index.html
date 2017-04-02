@@ -1,51 +1,101 @@
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'boards/style.css' %}" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.3.0/milligram.min.css">
-
-<header class="header">
-   <section class="container">
-      <h1 class="title">Leaderboards.</h1>
-      <a class="button" href="#new-game" title="New game">New game</a>
-      <a class="button" href="#rankings" title="Getting Started">Rankings</a>
-      <a class="button" href="#player" title="Getting Started">Players</a>
-   </section>
-</header>
-
-<section class="container" id="new-game">
-   <h3 class="title">New Game</h3>
-   <form method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit" />
-    </form>
-</section>
-
-<section class="container" id="rankings">
-   <h3 class="title">Rankings</h3>
-   {% for key,value in rankings.items %}
-    <h4>{{key}}</h4>
-    <table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Wins</th>
-      <th>Loses</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for k,v in value.items %}
-    <tr>
-    <td>{{k}}</td>
-    {% for i in v%}
-    <td>{{i}} </td>
-    {% endfor %}  
-    </tr>
-    {% endfor %}  
-  </tbody>
-</table>
-{% endfor %}
-
-    </form>
-</section>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 
+<link rel="stylesheet" type="text/css" href="{% static 'boards/normalize.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'boards/skeleton.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'boards/custom.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'boards/skeleton-tabs.css' %}" />
+<link href='//fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+<script src="{% static 'boards/skeleton-tabs.js' %}"></script>
+
+<div class="section hero">
+  <div class="container">
+    <div class="row">
+      <div>
+        <h2>Leaderboards.</h2>
+        <a class="button button-primary" href="#new-game" title="New game">New game</a>
+        <a class="button button-primary" href="#rankings" title="Getting Started">Rankings</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section new-game" id="new-game">
+  <div class="container">
+    <div class="row">
+      <div class="two columns">
+        <h3>New game?</h3>
+      </div>
+      <form method="post">
+        {% csrf_token %}
+        <div class="two columns">
+          <div class="fieldWrapper">
+            <label for="{{ form.comp.id_for_label }}">Competition</label> {{ form.comp }}
+          </div>
+        </div>
+        <div class="two columns">
+          <div class="fieldWrapper">
+            <label for="{{ form.winner.id_for_label }}">Winner</label> {{ form.winner }}
+          </div>
+        </div>
+        <div class="two columns">
+          <div class="fieldWrapper">
+            <label for="{{ form.loser.id_for_label }}">Loser</label> {{ form.loser }}
+          </div>
+        </div>
+        <div class="four columns submit-button">
+          <input class="u-full-width" type="submit" value="Submit" />
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<div class="section rankings" id="rankings">
+  <div class="container">
+    <div class="row">
+      <div class="rankings-select">
+        <h3>Rankings</h3>
+      </div>
+    </div>
+    <ul class="tab-nav">
+      {% for key,value in rankings.items %}
+      <li>
+        <a class="{% cycle 'button active' 'button' %}" href="#{{key}}">{{key}}</a>
+      </li>
+      {% endfor %}
+    </ul>
+
+    <div class="tab-content">
+      {% for key,value in rankings.items %}
+      <div class="{% cycle 'tab-pane active' 'tab-pane' %}" id="{{key}}">
+
+        <table class='center'>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Wins</th>
+              <th>Loses</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for k,v in value.items %}
+            <tr>
+              <td>{{k}}</td>
+              {% for i in v%}
+              <td>{{i}} </td>
+              {% endfor %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      {% endfor %}
+    </div>
+  </div>
+</div>

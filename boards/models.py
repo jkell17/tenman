@@ -29,8 +29,8 @@ class GameForm(forms.ModelForm):
     class Meta:
         model = Game
         fields = ('comp', 'winner', 'loser')
-
-    def clean(self):	
+    
+    def clean(self):
     	if self.cleaned_data.get('winner') == self.cleaned_data.get('loser'):
     		raise ValidationError("same winner and loser")
     	return self.cleaned_data
