@@ -7,8 +7,8 @@ from django import forms
 # Create your models here.
 class Player(models.Model):
     name = models.CharField(max_length=200, primary_key=True)
-    hometown = models.CharField(max_length=200)
 
+    hometown = models.CharField(max_length=200)
     def __str__(self):              # __unicode__ on Python 2
         return "%s" % self.name
 
@@ -29,7 +29,7 @@ class GameForm(forms.ModelForm):
     class Meta:
         model = Game
         fields = ('comp', 'winner', 'loser')
-    
+
     def clean(self):
     	if self.cleaned_data.get('winner') == self.cleaned_data.get('loser'):
     		raise ValidationError("same winner and loser")

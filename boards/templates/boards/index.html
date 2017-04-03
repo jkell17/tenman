@@ -80,15 +80,17 @@
               <th>Name</th>
               <th>Wins</th>
               <th>Loses</th>
+              <th>Elo</th>
             </tr>
           </thead>
           <tbody>
-            {% for k,v in value.items %}
+
+            {% for k in value %}
             <tr>
-              <td>{{k}}</td>
-              {% for i in v%}
-              <td>{{i}} </td>
-              {% endfor %}
+              <td>{{k.name}}</td>
+              <td>{{k.wins}}</td>
+              <td>{{k.loses}}</td>
+              <td>{{k.elo |floatformat}}</td>
             </tr>
             {% endfor %}
           </tbody>
