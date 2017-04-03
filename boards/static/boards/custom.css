@@ -25,7 +25,19 @@
     padding: 10px;
 }
 
+.success-row{
+  font-size: 3.2rem;
+}
+.success-row span{
+  font-size: 2.2rem;
+}
 
+.success-row span.win{
+  color:green;
+}
+.success-row span.lose{
+  color:red;
+}
 /*.rankings-select{
   font-size: 2.4rem;
   -webkit-appearance: none;

@@ -13,10 +13,13 @@
 <div class="section hero">
   <div class="container">
     <div class="row">
+      <div class='success-row'>{{latest.winner}} <span>(<span class='win'>+{{winnerChange |floatformat}}</span>)</span> beat {{latest.loser}} <span>(<span class='lose'>{{loserChange |floatformat }}</span>) </span> in {{latest.comp |lower}}.
+      </div>
       <div>
-        <h2>Success.</h2>
+        <a class="button button-primary" href="delete/{{latest.id}}">Undo</a>
         <a class="button button-primary" href="/" title="New game">Return to leaderboards</a>
       </div>
+
     </div>
   </div>
 </div>

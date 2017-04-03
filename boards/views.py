@@ -3,6 +3,7 @@ from django.shortcuts import render
 from .models import Player, Game, GameForm, Competition
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.shortcuts import get_object_or_404
 
 class PlayerElo:
     def __init__(self, elo):
@@ -70,7 +71,40 @@ def index(request):
 		return render(request, 'boards/index.html', context)
 
 def success(request):
-	return render(request, 'boards/success.html')
+
+    last_game = Game.objects.latest('date')
+    rankings = {}
+
+    p = Player.objects.all()
+    c = Competition.objects.all()
+    g = Game.objects.exclude(id = last_game.id)
+
+    for comp in c:
+        rankings[comp] = {key:[0,0,1200] for key in p}
+
+    for game in g:
+        elo_win = PlayerElo(rankings[game.comp][game.winner][2])
+        elo_lose = PlayerElo(rankings[game.comp][game.loser][2])
+        elo_win.play(elo_lose, win=True)
+        rankings[game.comp][game.winner][2] = elo_win.elo
+        rankings[game.comp][game.loser][2] = elo_lose.elo
+        rankings[game.comp][game.winner][0] += 1
+        rankings[game.comp][game.loser][1] += 1
+
+
+    preA = rankings[last_game.comp][last_game.winner][2]
+    preB = rankings[last_game.comp][last_game.loser][2]
+
+    A = PlayerElo(preA)
+    B = PlayerElo(preB)
+    A.play(B, win=True)
+    winnerChange =  A.elo - preA
+    loserChange= B.elo - preB
+    return render(request, 'boards/success.html', context= {'latest':last_game, 'winnerChange': winnerChange, 'loserChange':loserChange})
 
 def failure(request):
 	return render(request, 'boards/failure.html')
+
+def delete(request,id):
+    game =  get_object_or_404(Game, pk=id).delete()
+    return HttpResponseRedirect('/')

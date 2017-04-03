@@ -19,33 +19,67 @@ class PlayerElo:
         return self.elo
 
 def run():
-	rankings = {}
+	# rankings = {}
+    #
+	# p = Player.objects.all()
+	# c = Competition.objects.all()
+	# g = Game.objects.all()
+    #
+	# for comp in c:
+	# 	rankings[comp] = {key:[0,0,1200] for key in p}
+	# for game in g:
+	# 	elo_win = PlayerElo(rankings[game.comp][game.winner][2])
+	# 	elo_lose = PlayerElo(rankings[game.comp][game.loser][2])
+	# 	elo_win.play(elo_lose, win=True)
+	# 	rankings[game.comp][game.winner][2] = elo_win.elo
+	# 	rankings[game.comp][game.loser][2] = elo_lose.elo
+	# 	rankings[game.comp][game.winner][0] += 1
+	# 	rankings[game.comp][game.loser][1] += 1
+    #
+	# final = {}
+	# for r in rankings:
+	# 	i = []
+	# 	keys= rankings[r].keys()
+	# 	for k in keys:
+	# 		l = {}
+	# 		l['name'] = k.name
+	# 		l['wins'] = rankings[r][k][0]
+	# 		l['loses'] = rankings[r][k][1]
+	# 		l['elo'] = rankings[r][k][2]
+	# 		i.append(l)
+	# 	final[r]= i
+	# return final
 
-	p = Player.objects.all()
-	c = Competition.objects.all()
-	g = Game.objects.all()
+    last_game = Game.objects.latest('date')
+    rankings = {}
 
-	for comp in c:
-		rankings[comp] = {key:[0,0,1200] for key in p}
-	for game in g:
-		elo_win = PlayerElo(rankings[game.comp][game.winner][2])
-		elo_lose = PlayerElo(rankings[game.comp][game.loser][2])
-		elo_win.play(elo_lose, win=True)
-		rankings[game.comp][game.winner][2] = elo_win.elo
-		rankings[game.comp][game.loser][2] = elo_lose.elo
-		rankings[game.comp][game.winner][0] += 1
-		rankings[game.comp][game.loser][1] += 1
+    p = Player.objects.all()
+    c = Competition.objects.all()
+    g = Game.objects.exclude(id = last_game.id)
+    # g = Game.objects.all()
 
-	final = {}
-	for r in rankings:
-		i = []
-		keys= rankings[r].keys()
-		for k in keys:
-			l = {}
-			l['name'] = k.name
-			l['wins'] = rankings[r][k][0]
-			l['loses'] = rankings[r][k][1]
-			l['elo'] = rankings[r][k][2]
-			i.append(l)
-		final[r]= i
-	return final
+    for comp in c:
+        rankings[comp] = {key:[0,0,1200] for key in p}
+
+    for game in g:
+        elo_win = PlayerElo(rankings[game.comp][game.winner][2])
+        elo_lose = PlayerElo(rankings[game.comp][game.loser][2])
+        elo_win.play(elo_lose, win=True)
+        rankings[game.comp][game.winner][2] = elo_win.elo
+        rankings[game.comp][game.loser][2] = elo_lose.elo
+        rankings[game.comp][game.winner][0] += 1
+        rankings[game.comp][game.loser][1] += 1
+
+
+    preA = rankings[last_game.comp][last_game.winner][2]
+    preB = rankings[last_game.comp][last_game.loser][2]
+
+    A = PlayerElo(preA)
+    B = PlayerElo(preB)
+    A.play(B, win=True)
+    print A.elo, preA, A.elo - preA
+    print B.elo, preB, B.elo - preB
+
+
+
+    return
