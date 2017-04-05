@@ -1,14 +1,6 @@
-{% load static %}
-<meta name="viewport" content="width=device-width, initial-scale=1">
+{% extends 'boards/base.html' %}
 
-
-<link rel="stylesheet" type="text/css" href="{% static 'boards/normalize.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static 'boards/skeleton.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static 'boards/custom.css' %}" />
-<link rel="stylesheet" type="text/css" href="{% static 'boards/skeleton-tabs.css' %}" />
-<link href='//fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-
+{% block content %}
 <div class="section hero">
   <div class="container">
     <div class="row">
@@ -19,3 +11,4 @@
     </div>
   </div>
 </div>
+{% endblock %}

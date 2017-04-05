@@ -75,12 +75,14 @@
           <tbody>
 
             {% for k in value %}
+            {% if k.elo != 1200 %}
             <tr>
               <td>{{k.name}}</td>
               <td>{{k.wins}}</td>
               <td>{{k.loses}}</td>
               <td>{{k.elo |floatformat}}</td>
             </tr>
+            {% endif %}
             {% endfor %}
           </tbody>
         </table>
