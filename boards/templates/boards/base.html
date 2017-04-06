@@ -10,6 +10,18 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
 <script src="{% static 'boards/skeleton-tabs.js' %}"></script>
-<title>The TenMan</title>`
+<script src="{% static 'boards/typed.min.js' %}"></script>
+<title>The TenMan</title>` {% block content %}{% endblock %}
 
-{% block content %}{% endblock %}
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    Typed.new(".party-date", {
+      strings: ["4.8.17"],
+      typeSpeed: 100,
+      startDelay: 3000,
+      cursorChar: "|",
+    });
+  });
+</script>

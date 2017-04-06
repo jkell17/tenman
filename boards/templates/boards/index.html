@@ -1,6 +1,11 @@
-{% extends 'boards/base.html' %}
+{% extends 'boards/base.html' %} {% block content %}
 
-{% block content %}
+<div class="ad container">
+  Party? <span class="party-date">
+  </span>
+</div>
+
+
 <div class="section hero">
   <div class="container">
     <div class="row">
@@ -74,16 +79,14 @@
           </thead>
           <tbody>
 
-            {% for k in value %}
-            {% if k.elo != 1200 %}
+            {% for k in value %} {% if k.elo != 1200 %}
             <tr>
               <td>{{k.name}}</td>
               <td>{{k.wins}}</td>
               <td>{{k.loses}}</td>
               <td>{{k.elo |floatformat}}</td>
             </tr>
-            {% endif %}
-            {% endfor %}
+            {% endif %} {% endfor %}
           </tbody>
         </table>
       </div>

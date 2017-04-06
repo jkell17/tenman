@@ -75,6 +75,36 @@
     font-size: 2.4rem;
   }
 }
+.ad-space{
+  background-color: #d3d3d3;
+}
+.ad{
+  background-color: #d3d3d3;
+  text-align: center;
+  font-size: 3.4rem;
+}
+
+.typed-cursor{
+    opacity: 1;
+    -webkit-animation: blink 0.7s infinite;
+    -moz-animation: blink 0.7s infinite;
+    animation: blink 0.7s infinite;
+}
+@keyframes blink{
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
+@-webkit-keyframes blink{
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
+@-moz-keyframes blink{
+    0% { opacity:1; }
+    50% { opacity:0; }
+    100% { opacity:1; }
+}
 
 /* Bigger than 750 */
 @media (min-width: 750px) {
